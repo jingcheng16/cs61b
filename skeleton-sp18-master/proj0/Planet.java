@@ -104,6 +104,7 @@ public class Planet {
 		this.yyPos += dt * this.yyVel;
 	}
 
+	/** draw the picture of the planet */
 	public void draw(){
 		String path = "images/" + this.imgFileName;
 		StdDraw.picture(this.xxPos,this.yyPos,path);
