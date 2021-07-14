@@ -88,7 +88,7 @@ public class IntList {
                 head = head.rest;
             }
             head.rest = B;
-        }else{
+        } else {
             A = B;
         }
         return A;
@@ -110,10 +110,10 @@ public class IntList {
                     B = B.rest;
                 }
                 return result;
-            }else{
+            } else {
                 return null;
             }
-        }else {
+        } else {
             IntList result = new IntList(A.first, null);
             IntList head = result;
             while (A.rest != null) {
