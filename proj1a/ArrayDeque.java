@@ -55,6 +55,9 @@ public class ArrayDeque<T> {
     }
 
     public T removeFirst(){
+        if (size == 0) {
+            return null;
+        }
         T first = array[0];
         moveItem(1,-1);
         size--;
@@ -66,10 +69,13 @@ public class ArrayDeque<T> {
     }
 
     public T removeLast(){
+        if (size == 0) {
+            return null;
+        }
         T last = array[size - 1];
         array[size - 1] = null;
         size --;
-        double usageRatio = size/ array.length;
+        double usageRatio = (double) size/ array.length;
         if(usageRatio < 0.25 && array.length > 16){
             resizeArray(array.length/2);
         }
