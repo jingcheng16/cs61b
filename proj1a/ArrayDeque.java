@@ -6,60 +6,60 @@ public class ArrayDeque<T> {
     //The index of the last item will always be size-1;
     //The number of items in the deque will always be size;
 
-    public ArrayDeque(){
+    public ArrayDeque() {
         array = (T[]) new Object[8];
         size = 0;
     }
 
-    private void resizeArray(int count){
+    private void resizeArray(int count) {
         T[] temp = (T[]) new Object[count];
-        System.arraycopy(array,0,temp,0,size);
+        System.arraycopy(array, 0, temp, 0, size);
         array = temp;
     }
 
-    private void moveItem(int pos, int step){
+    private void moveItem(int pos, int step) {
         T[] temp = (T[]) new Object[array.length];
-        System.arraycopy(array,pos,temp,pos+step, size-pos);
+        System.arraycopy(array, pos, temp, pos + step, size - pos);
         array = temp;
     }
 
-    public void addFirst(T item){
-        if(size == array.length){
+    public void addFirst(T item) {
+        if (size == array.length) {
             resizeArray(size * 2);
         }
-        moveItem(0,1);
+        moveItem(0, 1);
         array[0] = item;
         size++;
     }
 
-    public void addLast(T item){
-        if(size == array.length){
+    public void addLast(T item) {
+        if (size == array.length) {
             resizeArray(size * 2);
         }
         array[size] = item;
         size++;
     }
 
-    public boolean isEmpty(){
+    public boolean isEmpty() {
         return size == 0;
     }
 
-    public int size(){
+    public int size() {
         return size;
     }
 
-    public void printDeque(){
-        for(int i = 0; i < size; i++){
-            System.out.print(array[i]+" ");
+    public void printDeque() {
+        for (int i = 0; i < size; i++) {
+            System.out.print(array[i] + " ");
         }
     }
 
-    public T removeFirst(){
+    public T removeFirst() {
         if (size == 0) {
             return null;
         }
         T first = array[0];
-        moveItem(1,-1);
+        moveItem(1, -1);
         size--;
         double usageRatio = (double) size/ array.length;
         if(usageRatio < 0.25 && array.length > 16){
