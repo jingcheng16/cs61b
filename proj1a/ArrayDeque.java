@@ -11,13 +11,13 @@ public class ArrayDeque<T> {
         size = 0;
     }
 
-    public void resizeArray(int count){
+    private void resizeArray(int count){
         T[] temp = (T[]) new Object[count];
         System.arraycopy(array,0,temp,0,size);
         array = temp;
     }
 
-    public void halfArray(){
+    private void halfArray(){
         T[] temp = (T[]) new Object[array.length/2];
         System.arraycopy(array,0,temp,0,size);
         array = temp;
