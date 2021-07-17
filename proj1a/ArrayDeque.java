@@ -58,7 +58,7 @@ public class ArrayDeque<T> {
         T first = array[0];
         moveItem(1,-1);
         size--;
-        double usageRatio = size/ array.length;
+        double usageRatio = (double) size/ array.length;
         if(usageRatio < 0.25 && array.length > 16){
             resizeArray(array.length/2);
         }
