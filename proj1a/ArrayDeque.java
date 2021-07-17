@@ -19,7 +19,7 @@ public class ArrayDeque<T> {
 
     private void moveItem(int pos, int step){
         T[] temp = (T[]) new Object[array.length];
-        System.arraycopy(array,pos,temp,pos+step, size);
+        System.arraycopy(array,pos,temp,pos+step, size-pos);
         array = temp;
     }
 

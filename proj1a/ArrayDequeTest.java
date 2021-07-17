@@ -110,10 +110,10 @@ public class ArrayDequeTest {
         // should not be empty
         passed = checkEmpty(false, ad1.isEmpty()) && passed;
 
-        int last = ad1.removeLast();
+        int first = ad1.removeFirst();
         // should not be empty
         passed = checkEmpty(false, ad1.isEmpty()) && passed;
-        passed = checkReturn(0,last) && passed;
+        passed = checkReturn(8,first) && passed;
 
         printTestStatus(passed);
 
