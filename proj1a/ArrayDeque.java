@@ -7,7 +7,7 @@ public class ArrayDeque<T> {
     //The number of items in the deque will always be size;
 
     public ArrayDeque(){
-        T[] array = (T[]) new Object[8];
+        array = (T[]) new Object[8];
         size = 0;
     }
 
@@ -27,7 +27,6 @@ public class ArrayDeque<T> {
         if(size == array.length){
             resizeArray(size * 2);
         }
-        System.arraycopy(array,0,array,1, size);
         array[0] = item;
         size++;
     }
