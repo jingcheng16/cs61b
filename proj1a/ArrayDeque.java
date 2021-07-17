@@ -17,9 +17,9 @@ public class ArrayDeque<T> {
         array = temp;
     }
 
-    private void halfArray(){
-        T[] temp = (T[]) new Object[array.length/2];
-        System.arraycopy(array,0,temp,0,size);
+    private void moveItem(int pos, int step){
+        T[] temp = (T[]) new Object[array.length];
+        System.arraycopy(array,pos,temp,pos+step, size);
         array = temp;
     }
 
@@ -27,6 +27,7 @@ public class ArrayDeque<T> {
         if(size == array.length){
             resizeArray(size * 2);
         }
+        moveItem(0,1);
         array[0] = item;
         size++;
     }
@@ -55,10 +56,11 @@ public class ArrayDeque<T> {
 
     public T removeFirst(){
         T first = array[0];
-        System.arraycopy(array,1,array,0,size);
+        moveItem(1,-1);
         size--;
-        if(size/array.length < 0.25 && array.length > 16){
-            halfArray();
+        double usageRatio = size/ array.length;
+        if(usageRatio < 0.25 && array.length > 16){
+            resizeArray(array.length/2);
         }
         return first;
     }
@@ -67,8 +69,9 @@ public class ArrayDeque<T> {
         T last = array[size - 1];
         array[size - 1] = null;
         size --;
-        if(size/array.length < 0.25 && array.length > 16){
-            halfArray();
+        double usageRatio = size/ array.length;
+        if(usageRatio < 0.25 && array.length > 16){
+            resizeArray(array.length/2);
         }
         return last;
     }

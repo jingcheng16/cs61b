@@ -19,6 +19,16 @@ public class ArrayDequeTest {
         return true;
     }
 
+    /* Utility method for printing out return checks. */
+    public static boolean checkReturn(int expected, int actual) {
+        if (expected != actual) {
+            System.out.println("returned " + actual + ", but expected: " + expected);
+            return false;
+        }
+        return true;
+    }
+
+
     /* Prints a nice message based on whether a test passed.
      * The \n means newline. */
     public static void printTestStatus(boolean passed) {
@@ -81,9 +91,38 @@ public class ArrayDequeTest {
 
     }
 
+    public static void gradescopeTest(){
+        System.out.println("Running Gradescope Test. ");
+
+        ArrayDeque<Integer> ad1 = new ArrayDeque<>();
+
+        // should be empty
+        boolean passed = checkEmpty(true, ad1.isEmpty());
+
+        ad1.addFirst(0);
+        ad1.addFirst(1);
+        ad1.addFirst(2);
+        ad1.addFirst(4);
+        ad1.addFirst(5);
+        ad1.addFirst(6);
+        ad1.addFirst(7);
+        ad1.addFirst(8);
+        // should not be empty
+        passed = checkEmpty(false, ad1.isEmpty()) && passed;
+
+        int last = ad1.removeLast();
+        // should not be empty
+        passed = checkEmpty(false, ad1.isEmpty()) && passed;
+        passed = checkReturn(0,last) && passed;
+
+        printTestStatus(passed);
+
+    }
+
     public static void main(String[] args) {
         System.out.println("Running tests.\n");
         addIsEmptySizeTest();
         addRemoveTest();
+        gradescopeTest();
     }
 }
