@@ -19,6 +19,15 @@ public class LinkedListDequeTest {
 		return true;
 	}
 
+	/* Utility method for printing out return checks. */
+	public static boolean checkReturn(int expected, int actual){
+		if (expected != actual) {
+			System.out.println("remove() returned " + actual + ", but expected: " + expected);
+			return false;
+		}
+		return true;
+	}
+
 	/* Prints a nice message based on whether a test passed. 
 	 * The \n means newline. */
 	public static void printTestStatus(boolean passed) {
@@ -84,9 +93,34 @@ public class LinkedListDequeTest {
 
 	}
 
+	public static void gradescopeTest(){
+		System.out.println("Running gradescope test.");
+		LinkedListDeque<Integer> lld1 = new LinkedListDeque<>();
+		//should be empty
+		boolean passed = checkEmpty(true, lld1.isEmpty());
+
+		lld1.addLast(0);
+		//should not be empty
+		passed = checkEmpty(false, lld1.isEmpty()) && passed;
+
+		lld1.addLast(10);
+		//should not be empty
+		passed = checkEmpty(false, lld1.isEmpty()) && passed;
+
+		int a = lld1.removeFirst();
+		//should not be empty
+		passed = checkEmpty(false, lld1.isEmpty()) && passed;
+		//should be 0
+		passed = checkReturn(0,a);
+
+		printTestStatus(passed);
+
+	}
+
 	public static void main(String[] args) {
 		System.out.println("Running tests.\n");
 		addIsEmptySizeTest();
 		addRemoveTest();
+		gradescopeTest();
 	}
 }
