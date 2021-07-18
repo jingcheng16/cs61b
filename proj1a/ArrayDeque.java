@@ -1,6 +1,8 @@
 public class ArrayDeque<T> {
     private int size;
     private T[] array;
+    private int nextFirst;
+    private int nextLast;
 
     //Invariants:
     //The index of the last item will always be size-1;
@@ -9,26 +11,51 @@ public class ArrayDeque<T> {
     public ArrayDeque() {
         array = (T[]) new Object[8];
         size = 0;
+        nextFirst = 4;
+        nextLast = 5;
+    }
+
+    private int oneBehind(int index){
+        if (index == array.length) {
+            return 0;
+        } else {
+            return index + 1;
+        }
+    }
+
+    private int oneBefore(int index){
+        if (index == 0) {
+            return array.length - 1;
+        } else {
+            return index - 1;
+        }
     }
 
     private void resizeArray(int count) {
         T[] temp = (T[]) new Object[count];
-        System.arraycopy(array, 0, temp, 0, size);
+        //0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19
+        //d e f g h                                 a  b  c
+        //nextFirst: 16, nextLast: 5
+        //0 1 2 3 4 5 6 7 8 9
+        //a b c d e f g h
+        if (oneBefore(nextLast) < oneBehind(nextFirst)) {
+            int len = array.length - oneBehind(nextFirst);
+            System.arraycopy(array, oneBehind(nextFirst), temp, 0, len);
+            System.arraycopy(array, 0, temp, len , size - len);
+        } else {
+            System.arraycopy(array, oneBehind(nextFirst), temp, 0, size);
+        }
         array = temp;
-    }
-
-    private void moveItem(int pos, int step) {
-        T[] temp = (T[]) new Object[array.length];
-        System.arraycopy(array, pos, temp, pos + step, size - pos);
-        array = temp;
+        nextFirst = array.length - 1;
+        nextLast = size;
     }
 
     public void addFirst(T item) {
         if (size == array.length) {
             resizeArray(size * 2);
         }
-        moveItem(0, 1);
-        array[0] = item;
+        array[nextFirst] = item;
+        nextFirst = oneBefore(nextFirst);
         size++;
     }
 
@@ -36,7 +63,8 @@ public class ArrayDeque<T> {
         if (size == array.length) {
             resizeArray(size * 2);
         }
-        array[size] = item;
+        array[nextLast] = item;
+        nextLast = oneBehind(nextLast);
         size++;
     }
 
@@ -49,17 +77,23 @@ public class ArrayDeque<T> {
     }
 
     public void printDeque() {
-        for (int i = 0; i < size; i++) {
-            System.out.print(array[i] + " ");
+        if (nextFirst > nextLast) {
+            for (int i = nextFirst + 1; i < array.length; i++) {
+                System.out.print(array[i] + " ");
+            }
+            for (int i = 0; i < nextLast; i++) {
+                System.out.print(array[i] + " ");
+            }
+        } else {
+            for (int i = nextFirst + 1; i < size; i++) {
+                System.out.print(array[i] + " ");
+            }
         }
     }
 
     public T removeFirst() {
-        if (size == 0) {
-            return null;
-        }
-        T first = array[0];
-        moveItem(1, -1);
+        T first = array[nextFirst + 1];
+        array[nextFirst + 1] = null;
         size--;
         double usageRatio = (double) size/ array.length;
         if(usageRatio < 0.25 && array.length > 16){
@@ -69,11 +103,8 @@ public class ArrayDeque<T> {
     }
 
     public T removeLast(){
-        if (size == 0) {
-            return null;
-        }
-        T last = array[size - 1];
-        array[size - 1] = null;
+        T last = array[nextLast - 1];
+        array[nextLast - 1] = null;
         size --;
         double usageRatio = (double) size/ array.length;
         if(usageRatio < 0.25 && array.length > 16){
