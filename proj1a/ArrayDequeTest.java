@@ -169,11 +169,61 @@ public class ArrayDequeTest {
         // should be empty
         boolean passed = checkEmpty(true, ad1.isEmpty());
         ad1.addLast(0);
-        ad1.addFirst(1);
-        int first = ad1.removeFirst();
-        passed = checkReturn(1, first) && passed;
-        int get = ad1.get(0);
-        passed = checkReturn(0, get) && passed;
+        ad1.addLast(1);
+        ad1.addLast(2);
+
+        int returnValue = ad1.removeFirst();
+        // return should be 0
+        passed = checkReturn(0, returnValue) && passed;
+
+        ad1.addFirst(4);
+
+        returnValue = ad1.removeLast();
+        // return should be 2
+        passed = checkReturn(2, returnValue) && passed;
+
+        ad1.addLast(6);
+        returnValue = ad1.get(2);
+        // return should be 6
+        passed = checkReturn(6, returnValue) && passed;
+
+        returnValue = ad1.removeFirst();
+        // return should be 4
+        passed = checkReturn(4, returnValue) && passed;
+
+        returnValue = ad1.removeLast();
+        // return should be 6
+        passed = checkReturn(6, returnValue) && passed;
+
+        returnValue = ad1.removeFirst();
+        // return should be 1
+        passed = checkReturn(1, returnValue) && passed;
+
+        ad1.addLast(11);
+
+        returnValue = ad1.get(0);
+        // return should be 11
+        passed = checkReturn(11, returnValue) && passed;
+
+        returnValue = ad1.removeLast();
+        // return should be 11
+        passed = checkReturn(11, returnValue) && passed;
+
+        ad1.addLast(14);
+        ad1.addLast(15);
+        ad1.addFirst(16);
+
+        returnValue = ad1.get(0);
+        // return should be 16
+        passed = checkReturn(16, returnValue) && passed;
+
+        ad1.addLast(18);
+
+        returnValue = ad1.removeFirst();
+        // return should be 16
+        passed = checkReturn(16, returnValue) && passed;
+
+        ad1.get(1);
 
         printTestStatus(passed);
     }

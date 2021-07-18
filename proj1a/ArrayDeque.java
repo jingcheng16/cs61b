@@ -122,6 +122,10 @@ public class ArrayDeque<T> {
     }
 
     public T get(int index) {
-        return array[oneBehind(nextFirst) + index ];
+        int pos = oneBehind(nextFirst) + index;
+        if (pos > (array.length - 1)) {
+            pos = pos - size;
+        }
+        return array[pos];
     }
 }
