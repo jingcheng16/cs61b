@@ -124,7 +124,7 @@ public class ArrayDeque<T> {
     public T get(int index) {
         int pos = oneBehind(nextFirst) + index;
         if (pos > (array.length - 1)) {
-            pos = pos - size;
+            pos = pos - array.length;
         }
         return array[pos];
     }
