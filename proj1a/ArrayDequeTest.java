@@ -91,7 +91,7 @@ public class ArrayDequeTest {
 
     }
 
-    public static void gradescopeTest003(){
+    public static void gradescopeTest003() {
         System.out.println("Running Gradescope Test 003. ");
 
         ArrayDeque<Integer> ad1 = new ArrayDeque<>();
@@ -117,7 +117,7 @@ public class ArrayDequeTest {
         int first = ad1.removeFirst();
         // should not be empty
         passed = checkEmpty(false, ad1.isEmpty()) && passed;
-        passed = checkReturn(8,first) && passed;
+        passed = checkReturn(8, first) && passed;
 
         printTestStatus(passed);
 
@@ -135,7 +135,7 @@ public class ArrayDequeTest {
         ad1.addLast(2);
 
         int last = ad1.removeLast();
-        passed = checkReturn(2,last) && passed;
+        passed = checkReturn(2, last) && passed;
 
         ad1.addLast(4);
         ad1.addLast(5);

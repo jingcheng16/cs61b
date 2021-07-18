@@ -113,7 +113,7 @@ public class ArrayDeque<T> {
         T last = array[oneBefore(nextLast)];
         array[oneBefore(nextLast)] = null;
         reduceSize();
-        double usageRatio = (double) size/ array.length;
+        double usageRatio = (double) size / array.length;
         if (usageRatio < 0.25 && array.length > 16) {
             resizeArray(array.length / 2);
         }
