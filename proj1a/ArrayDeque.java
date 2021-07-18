@@ -15,7 +15,13 @@ public class ArrayDeque<T> {
         nextLast = 5;
     }
 
-    private int oneBehind(int index){
+    private void reduceSize() {
+        if (size > 0) {
+            size--;
+        }
+    }
+
+    private int oneBehind(int index) {
         if (index == array.length - 1) {
             return 0;
         } else {
@@ -23,7 +29,7 @@ public class ArrayDeque<T> {
         }
     }
 
-    private int oneBefore(int index){
+    private int oneBefore(int index) {
         if (index == 0) {
             return array.length - 1;
         } else {
@@ -41,7 +47,7 @@ public class ArrayDeque<T> {
         if (oneBefore(nextLast) < oneBehind(nextFirst)) {
             int len = array.length - oneBehind(nextFirst);
             System.arraycopy(array, oneBehind(nextFirst), temp, 0, len);
-            System.arraycopy(array, 0, temp, len , size - len);
+            System.arraycopy(array, 0, temp, len, size - len);
         } else {
             System.arraycopy(array, oneBehind(nextFirst), temp, 0, size);
         }
@@ -94,28 +100,28 @@ public class ArrayDeque<T> {
     public T removeFirst() {
         T first = array[oneBehind(nextFirst)];
         array[oneBehind(nextFirst)] = null;
-        size--;
-        double usageRatio = (double) size/ array.length;
-        if(usageRatio < 0.25 && array.length > 16){
-            resizeArray(array.length/2);
+        reduceSize();
+        double usageRatio = (double) size / array.length;
+        if (usageRatio < 0.25 && array.length > 16) {
+            resizeArray(array.length / 2);
         }
         nextFirst = oneBehind(nextFirst);
         return first;
     }
 
-    public T removeLast(){
+    public T removeLast() {
         T last = array[oneBefore(nextLast)];
         array[oneBefore(nextLast)] = null;
-        size --;
+        reduceSize();
         double usageRatio = (double) size/ array.length;
-        if(usageRatio < 0.25 && array.length > 16){
-            resizeArray(array.length/2);
+        if (usageRatio < 0.25 && array.length > 16) {
+            resizeArray(array.length / 2);
         }
         nextLast = oneBefore(nextLast);
         return last;
     }
 
-    public T get(int index){
-        return array[oneBehind(nextFirst) + index - 1];
+    public T get(int index) {
+        return array[oneBehind(nextFirst) + index ];
     }
 }
