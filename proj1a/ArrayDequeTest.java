@@ -218,7 +218,7 @@ public class ArrayDequeTest {
         printTestStatus(passed);
     }
 
-    private static void gradescopeTest008(){
+    private static void gradescopeTest008() {
         System.out.println("Running Gradescope Test 008. ");
 
         ArrayDeque<Integer> ad1 = new ArrayDeque<>();
