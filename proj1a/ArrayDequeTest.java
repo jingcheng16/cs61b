@@ -109,24 +109,15 @@ public class ArrayDequeTest {
         ad1.addFirst(7);
         ad1.addFirst(8);
         ad1.addFirst(9);
-        ad1.addFirst(10);
-        ad1.addFirst(11);
-        ad1.addFirst(12);
-        ad1.addFirst(13);
-        ad1.addFirst(14);
-        ad1.addFirst(15);
-        ad1.addFirst(16);
-        ad1.addFirst(17);
-        ad1.addFirst(18);
-        ad1.addFirst(19);
-        ad1.addFirst(20);
+
         // should not be empty
         passed = checkEmpty(false, ad1.isEmpty()) && passed;
 
+        ad1.removeFirst();
         int first = ad1.removeFirst();
         // should not be empty
         passed = checkEmpty(false, ad1.isEmpty()) && passed;
-        passed = checkReturn(20,first) && passed;
+        passed = checkReturn(8,first) && passed;
 
         printTestStatus(passed);
 

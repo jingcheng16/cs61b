@@ -92,28 +92,30 @@ public class ArrayDeque<T> {
     }
 
     public T removeFirst() {
-        T first = array[nextFirst + 1];
-        array[nextFirst + 1] = null;
+        T first = array[oneBehind(nextFirst)];
+        array[oneBehind(nextFirst)] = null;
         size--;
         double usageRatio = (double) size/ array.length;
         if(usageRatio < 0.25 && array.length > 16){
             resizeArray(array.length/2);
         }
+        nextFirst = oneBehind(nextFirst);
         return first;
     }
 
     public T removeLast(){
-        T last = array[nextLast - 1];
-        array[nextLast - 1] = null;
+        T last = array[oneBefore(nextLast)];
+        array[oneBefore(nextLast)] = null;
         size --;
         double usageRatio = (double) size/ array.length;
         if(usageRatio < 0.25 && array.length > 16){
             resizeArray(array.length/2);
         }
+        nextLast = oneBefore(nextLast);
         return last;
     }
 
     public T get(int index){
-        return array[index];
+        return array[oneBehind(nextFirst) + index - 1];
     }
 }
