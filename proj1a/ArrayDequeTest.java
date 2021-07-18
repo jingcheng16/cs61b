@@ -218,6 +218,56 @@ public class ArrayDequeTest {
         printTestStatus(passed);
     }
 
+    private static void gradescopeTest008(){
+        System.out.println("Running Gradescope Test 008. ");
+
+        ArrayDeque<Integer> ad1 = new ArrayDeque<>();
+
+        // should be empty
+        boolean passed = checkEmpty(true, ad1.isEmpty());
+
+        for (int i = 0; i < 100; i++) {
+            ad1.addFirst(0);
+            ad1.addFirst(1);
+            ad1.addFirst(2);
+            ad1.addFirst(3);
+            ad1.addFirst(4);
+            ad1.addFirst(5);
+            ad1.addFirst(6);
+            ad1.addFirst(7);
+            ad1.addFirst(8);
+            ad1.addFirst(9);
+            ad1.addFirst(10);
+            ad1.addFirst(11);
+            ad1.addFirst(12);
+            ad1.addFirst(13);
+            ad1.addFirst(14);
+            ad1.addFirst(15);
+            ad1.addFirst(16);
+            ad1.removeFirst();
+            ad1.removeFirst();
+            ad1.removeFirst();
+            ad1.removeFirst();
+            ad1.removeFirst();
+            ad1.removeFirst();
+            ad1.removeFirst();
+            ad1.removeFirst();
+            ad1.removeFirst();
+            ad1.removeFirst();
+            ad1.removeFirst();
+            ad1.removeFirst();
+            ad1.removeFirst();
+            ad1.removeFirst();
+            ad1.removeFirst();
+            ad1.removeFirst();
+            int returnValue = ad1.removeFirst();
+            passed = checkReturn(0, returnValue) && passed;
+            passed = checkEmpty(true, ad1.isEmpty()) && passed;
+        }
+
+        printTestStatus(passed);
+    }
+
 
     public static void main(String[] args) {
         System.out.println("Running tests.\n");
@@ -228,5 +278,6 @@ public class ArrayDequeTest {
         gradescopeTest005();
         gradescopeTest011();
         gradescopeTest012();
+        gradescopeTest008();
     }
 }

@@ -100,24 +100,24 @@ public class ArrayDeque<T> {
     public T removeFirst() {
         T first = array[oneBehind(nextFirst)];
         array[oneBehind(nextFirst)] = null;
+        nextFirst = oneBehind(nextFirst);
         reduceSize();
         double usageRatio = (double) size / array.length;
         if (usageRatio < 0.25 && array.length > 16) {
             resizeArray(array.length / 2);
         }
-        nextFirst = oneBehind(nextFirst);
         return first;
     }
 
     public T removeLast() {
         T last = array[oneBefore(nextLast)];
         array[oneBefore(nextLast)] = null;
+        nextLast = oneBefore(nextLast);
         reduceSize();
         double usageRatio = (double) size / array.length;
         if (usageRatio < 0.25 && array.length > 16) {
             resizeArray(array.length / 2);
         }
-        nextLast = oneBefore(nextLast);
         return last;
     }
 
