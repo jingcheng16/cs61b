@@ -6,10 +6,10 @@ public class LinkedListDeque<T> {
         private Node prev;
         private T item;
         private Node next;
-        private Node(Node prev_, T item_, Node next_) {
-            prev = prev_;
-            item = item_;
-            next = next_;
+        private Node(Node prevP, T itemP, Node nextP) {
+            prev = prevP;
+            item = itemP;
+            next = nextP;
         }
     }
 
@@ -84,17 +84,17 @@ public class LinkedListDeque<T> {
     }
 
     public T getRecursive(int index) {
-        return (T) getRecursive_(index).item;
+        return (T) getREcursive_(index).item;
     }
 
-    private Node getRecursive_(int index) {
+    private Node getREcursive_(int index) {
         if (size == 0 || index < 0 || index >= size) {
             return null;
         }
         if (index == 0) {
             return sentinel.next;
         } else {
-            return getRecursive_(index - 1).next;
+            return getREcursive_(index - 1).next;
         }
     }
 }
