@@ -16,7 +16,7 @@ public class ArrayDeque<T> {
     }
 
     private int oneBehind(int index){
-        if (index == array.length) {
+        if (index == array.length - 1) {
             return 0;
         } else {
             return index + 1;
