@@ -2,8 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="64027fbf-b0df-4140-b28f-50038e23f8bf" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/ArrayDequeTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/ArrayDequeTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LinkedListDequeTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/LinkedListDequeTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../proj1b/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../proj1b/.idea/libraries/javalib.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../proj1b/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../proj1b/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../proj1b/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../proj1b/Deque.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../proj1b/LinkedListDeque.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../proj1b/OffByN.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../proj1b/OffByOne.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../proj1b/Palindrome.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../proj1b/proj1b.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../proj1b/TestPalindrome.java" beforeDir="false" afterPath="$PROJECT_DIR$/../proj1b/TestPalindrome.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
