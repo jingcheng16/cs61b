@@ -16,6 +16,7 @@ public class Palindrome {
     }
 
     public boolean isPalindrome(String word, int start, int end) {
+        //TODO: convert Capitalized character to uncapitalized
         if (word.charAt(start) == word.charAt(end)) {
             if (start == end || start + 1 == end) {
                 return true;
@@ -24,6 +25,30 @@ public class Palindrome {
             }
         } else {
             return false;
+        }
+    }
+
+    public boolean isPalindrome(String word, CharacterComparator cc) {
+        if (word == "") {
+            return true;
+        }
+        return isPalindrome(word, cc, 0,word.length() - 1);
+    }
+
+    public boolean isPalindrome(String word, CharacterComparator cc, int start, int end) {
+        //TODO: convert Capitalized character to uncapitalized
+        if (cc.equalChars(word.charAt(start), word.charAt(end))) {
+            if (start + 1 == end) {
+                return true;
+            } else {
+                return isPalindrome(word, cc, start + 1, end - 1);
+            }
+        } else {
+            if (start == end) {
+                return true;
+            } else {
+                return false;
+            }
         }
     }
 }
