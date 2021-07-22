@@ -28,9 +28,9 @@ public class TestPalindrome {
         assertFalse("'rancor' is not palindrome!", palindrome.isPalindrome("rancor"));
         assertTrue("'a' is palindrome off by one!", palindrome.isPalindrome("a", offByOne));
         assertTrue("'' is palindrome off by one!", palindrome.isPalindrome("", offByOne));
-        assertTrue("'racedbs' is palindrome off by one!", palindrome.isPalindrome("racedbs", offByOne));
-        assertTrue("'noon' is palindrome off by one!", palindrome.isPalindrome("nopm", offByOne));
-        assertFalse("'aaaaab' is not palindrome off by one!", palindrome.isPalindrome("aaaaab", offByOne));
+        assertTrue("'racedbs' is palindrome obo!", palindrome.isPalindrome("racedbs", offByOne));
+        assertTrue("'noon' is palindrome obo!", palindrome.isPalindrome("nopm", offByOne));
+        assertFalse("'aaaaab' is not palindrome obo!", palindrome.isPalindrome("aaaaab", offByOne));
 
     }
 
