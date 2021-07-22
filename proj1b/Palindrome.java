@@ -10,16 +10,6 @@ public class Palindrome {
     public boolean isPalindrome(String word) {
         Deque<Character> d = wordToDeque(word);
         return isPalindrome(d);
-
-
-        /*
-        if (word.equals("")) {
-            return true;
-        } else if (!word.equalsIgnoreCase(word)) {
-            return false;
-        } else {
-            return isPalindrome(word, 0, word.length() - 1);
-        }*/
     }
 
     private boolean isPalindrome(Deque d) {
@@ -30,30 +20,11 @@ public class Palindrome {
         } else {
             return false;
         }
-
-        /*
-        if (word.charAt(start) == word.charAt(end)) {
-            if (start == end || start + 1 == end) {
-                return true;
-            } else {
-                return isPalindrome(word, start + 1, end - 1);
-            }
-        } else {
-            return false;
-        }*/
     }
 
     public boolean isPalindrome(String word, CharacterComparator cc) {
         Deque<Character> d = wordToDeque(word);
         return isPalindrome(d, cc);
-        /*
-        if (word.equals("")) {
-            return true;
-        } else if (!word.equalsIgnoreCase(word)) {
-            return false;
-        } else {
-            return isPalindrome(word, cc, 0, word.length() - 1);
-        }*/
     }
 
     private boolean isPalindrome(Deque d, CharacterComparator cc) {
@@ -64,16 +35,5 @@ public class Palindrome {
         } else {
             return false;
         }
-
-        /*
-        if (cc.equalChars(word.charAt(start), word.charAt(end))) {
-            if (start + 1 == end) {
-                return true;
-            } else {
-                return isPalindrome(word, cc, start + 1, end - 1);
-            }
-        } else {
-            return (start == end);
-        }*/
     }
 }
