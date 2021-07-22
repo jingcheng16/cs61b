@@ -10,12 +10,14 @@ public class Palindrome {
     public boolean isPalindrome(String word) {
         if (word.equals("")) {
             return true;
+        } else if (!word.equalsIgnoreCase(word)) {
+            return false;
+        } else {
+            return isPalindrome(word, 0, word.length() - 1);
         }
-        return isPalindrome(word, 0, word.length() - 1);
     }
 
     private boolean isPalindrome(String word, int start, int end) {
-        word = word.toLowerCase();
         if (word.charAt(start) == word.charAt(end)) {
             if (start == end || start + 1 == end) {
                 return true;
@@ -30,12 +32,14 @@ public class Palindrome {
     public boolean isPalindrome(String word, CharacterComparator cc) {
         if (word.equals("")) {
             return true;
+        } else if (!word.equalsIgnoreCase(word)) {
+            return false;
+        } else {
+            return isPalindrome(word, cc, 0, word.length() - 1);
         }
-        return isPalindrome(word, cc, 0, word.length() - 1);
     }
 
     private boolean isPalindrome(String word, CharacterComparator cc, int start, int end) {
-        word = word.toLowerCase();
         if (cc.equalChars(word.charAt(start), word.charAt(end))) {
             if (start + 1 == end) {
                 return true;

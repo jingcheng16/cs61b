@@ -22,16 +22,16 @@ public class TestPalindrome {
     public void testIsPalindrome() {
         assertTrue("'a' is palindrome!", palindrome.isPalindrome("a"));
         assertTrue("'' is palindrome!", palindrome.isPalindrome(""));
-        assertTrue("'racecar' is palindrome!", palindrome.isPalindrome("racecar"));
+        assertFalse("'RaCecar' isnot palindrome!", palindrome.isPalindrome("RaCecar"));
         assertTrue("'noon' is palindrome!", palindrome.isPalindrome("noon"));
-        assertFalse("'aaaaab' is not palindrome!", palindrome.isPalindrome("aaaaab"));
+        assertFalse("'aaAaab' is not palindrome!", palindrome.isPalindrome("aaAaab"));
         assertFalse("'rancor' is not palindrome!", palindrome.isPalindrome("rancor"));
         assertTrue("'a' is palindrome off by one!", palindrome.isPalindrome("a", offByOne));
         assertTrue("'' is palindrome off by one!", palindrome.isPalindrome("", offByOne));
-        assertTrue("'racedbs' is palindrome obo!", palindrome.isPalindrome("racedbs", offByOne));
-        assertTrue("'noon' is palindrome obo!", palindrome.isPalindrome("nopm", offByOne));
+        assertFalse("'racedBs' is palindrome obo!", palindrome.isPalindrome("racedBs", offByOne));
+        assertFalse("'noPM' is palindrome obo!", palindrome.isPalindrome("noPM", offByOne));
         assertFalse("'aaaaab' is not palindrome obo!", palindrome.isPalindrome("aaaaab", offByOne));
-
+        assertTrue("'flake' is palindrome off by one!", palindrome.isPalindrome("flake", offByOne));
     }
 
 }
