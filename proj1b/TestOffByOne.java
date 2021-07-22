@@ -16,5 +16,7 @@ public class TestOffByOne {
         assertFalse("'a' and 'b' are not different by exactly one", offByOne.equalChars('a', 'e'));
         assertFalse("'r' and 'q' are not different by exactly one", offByOne.equalChars('z', 'a'));
         assertFalse("'r' and 'q' are not different by exactly one", offByOne.equalChars('a', 'a'));
+        assertTrue("'A' and 'B' are different by exactly one", offByOne.equalChars('A', 'B'));
+        assertFalse("'A' and 'b' are not different by exactly one", offByOne.equalChars('A', 'b'));
     }
 }
