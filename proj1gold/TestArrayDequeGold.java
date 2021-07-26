@@ -18,12 +18,12 @@ public class TestArrayDequeGold {
                 sad1.addLast(i);
                 ads1.addLast(i);
                 message += "addLast(" + i + ")\n";
-                assertEquals(ads1.size(),sad1.size());
+                assertEquals(message, ads1.size(), sad1.size());
             } else if (numberBetweenZeroAndOne < 0.5) {
                 sad1.addFirst(i);
                 ads1.addFirst(i);
                 message += "addFirst(" + i + ")\n";
-                assertEquals(ads1.size(),sad1.size());
+                assertEquals(message, ads1.size(), sad1.size());
             } else if (numberBetweenZeroAndOne < 0.75) {
                 if (sad1.size() == 0) {
                     continue;
