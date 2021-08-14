@@ -6,10 +6,7 @@ import byog.TileEngine.TERenderer;
 import byog.TileEngine.TETile;
 import byog.TileEngine.Tileset;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 
 import static java.lang.Math.abs;
 
@@ -50,6 +47,8 @@ public class Game {
 
         // initialize tiles
         TETile[][] world = new TETile[WIDTH][HEIGHT];
+
+        //create a 2d array to store all the position
         Position[][] coordinate = new Position[WIDTH][HEIGHT];
         Set<Room> rooms = new HashSet<>();
         Set<Position> occupied = new HashSet<>();
@@ -59,7 +58,7 @@ public class Game {
             for (int y = 0; y < HEIGHT; y += 1) {
                 world[x][y] = Tileset.NOTHING;
                 coordinate[x][y] = new Position(x,y);
-                if (x >= (WIDTH - 2) || y >= (HEIGHT - 2)) {
+                if (x >= (WIDTH - 3) || y >= (HEIGHT - 3)) {
                     continue;
                 } else {
                     startingPool.add(coordinate[x][y]);
@@ -71,10 +70,14 @@ public class Game {
 
         for (int i = 0; i < 30; i++) {
             makeRoom(world, coordinate, occupied, startingPool, rooms);
-            if (startingPool.size() < 1000) {
-                break;
-            }
         }
+
+
+        for (Room r: rooms) {
+            r.makeBranch(coordinate, world, RANDOM);
+        }
+
+
 
         ter.renderFrame(world);
 
@@ -91,7 +94,7 @@ public class Game {
         return p;
     }
 
-    private static Position randomPoint(ArrayList<Position> space) {
+    private static Position randomPoint(List<Position> space) {
         // the max starting point should not reach the edge
         Object[] spaceArray = space.toArray();
         RandomUtils.shuffle(RANDOM, spaceArray);
@@ -101,29 +104,61 @@ public class Game {
 
 
 
-    private static Room makeRectangle(Position p, TETile[][] world, Position[][] coordinate) {
-        //Position[] WidthLine = coordinate[p.x].clone();
-        //Position horizontalP = randomPoint(p.availableHeight(WidthLine));
-        //int height = abs(horizontalP.y - p.y);
+    private static Room makeRectangle(Position p, TETile[][] world, Position[][] coordinate, boolean isHallWay) {
         System.out.println("Position p.x: " + p.x);
         System.out.println("Position p.y: " + p.y);
-        int height = RandomUtils.uniform(RANDOM, 3, 8);
-        System.out.println("Initial height" + height);
-        int width = RandomUtils.uniform(RANDOM, 3, 8);
-        System.out.println("Initial width" + width);
-        while(p.y + height > HEIGHT) {
-            height = RandomUtils.uniform(RANDOM, 3, 8);
-            System.out.println("Rerun height" + height);
+
+        int heightLimit = HEIGHT - p.y;
+        int widthLimit = WIDTH - p.x;
+        int width;
+        int height;
+
+
+        if (isHallWay) {
+            //50% probability to generate a horizontal hallway or vertical hallway
+            if (RandomUtils.bernoulli(RANDOM, 0.5)) {
+                width = 3;
+                if (heightLimit == 3) {
+                    height = 3;
+                } else {
+                    height = RandomUtils.uniform(RANDOM, 3, heightLimit);
+                }
+            } else {
+                height = 3;
+                if (widthLimit == 3) {
+                    width = 3;
+                } else {
+                    width = RandomUtils.uniform(RANDOM, 3, widthLimit);
+                }
+            }
+        } else {
+            if (heightLimit > 10) {
+                heightLimit = 10;
+            }
+            height = 3;
+            if (heightLimit != 3) {
+                height = RandomUtils.uniform(RANDOM, 3, heightLimit);
+            }
+            System.out.println("Initial height:" + height);
+
+            if (widthLimit > 10) {
+                widthLimit = 10;
+            }
+            width = 3;
+            if (widthLimit != 3) {
+                width = RandomUtils.uniform(RANDOM, 3, widthLimit);
+            }
+            System.out.println("Initial width:" + width);
+
         }
-        while(p.x + width > WIDTH) {
-            width = RandomUtils.uniform(RANDOM, 3, 8);
-            System.out.println("Rerun width" + width);
-        }
+
+        System.out.println("Final height: " + height);
+        System.out.println("Final width: " + width);
+
         //initialize new room
         Room room = new Room(p, width, height, coordinate);
         return room;
     }
-
 
     //@source https://stackoverflow.com/questions/8708542/something-like-contains-any-for-java-set
     //check if the new generated Room have any overlap with the existing room.
@@ -131,11 +166,11 @@ public class Game {
         return (occupied.stream().anyMatch(newRoom.entireRoom::contains));
     }
 
-    public static void makeRoom(TETile[][] world, Position[][] coordinate, Set occupied, Set startingPool, Set rooms) {
+    public static Room makeRoom(TETile[][] world, Position[][] coordinate, Set occupied, Set startingPool, Set rooms) {
         //make a new room
         Position randomP = randomPoint(startingPool);
         System.out.println("Generate the starting point");
-        Room r = makeRectangle(randomP, world, coordinate);
+        Room r = makeRectangle(randomP, world, coordinate, false);
         System.out.println("Generate a new room");
 
         while (isOverlapped(occupied,r)) {
@@ -143,23 +178,17 @@ public class Game {
             System.out.println("Overlapped. Regeneration begin.");
             randomP = randomPoint(startingPool);
             System.out.println("Generate the starting point");
-            r = makeRectangle(randomP, world, coordinate);
+            r = makeRectangle(randomP, world, coordinate, false);
             System.out.println("Generate a new room");
         }
-        //draw the perimeter
-        for (Position point: r.perimeter) {
-            world[point.x][point.y] = Tileset.WALL;
-            point.status = 1;
-        }
-        for (Position point: r.inner) {
-            world[point.x][point.y] = Tileset.FLOOR;
-            point.status = 1;
-        }
+
+        r.drawRoom(world);
+
         occupied.addAll(r.entireRoom);
         startingPool.removeAll(r.entireRoom);
         rooms.add(r);
         System.out.println("New Room Added");
+
+        return r;
     }
-
-
 }
