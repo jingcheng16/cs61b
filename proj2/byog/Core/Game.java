@@ -44,11 +44,12 @@ public class Game {
         long value = Long.parseLong(input.replaceAll("[^0-9]", ""));
 
 
+
         SEED = value;
         RANDOM = new Random(SEED);
 
         // initialize the tile rendering engine with a window of size WIDTH x HEIGHT
-        ter.initialize(WIDTH, HEIGHT);
+        //ter.initialize(WIDTH, HEIGHT);
 
         // initialize tiles
         TETile[][] world = new TETile[WIDTH][HEIGHT];
@@ -87,7 +88,8 @@ public class Game {
 
 
 
-        ter.renderFrame(world);
+
+        //ter.renderFrame(world);
 
         //return finalWorldFrame;
         return world;
