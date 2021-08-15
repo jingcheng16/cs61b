@@ -41,7 +41,8 @@ public class Game {
         // drawn if the same inputs had been given to playWithKeyboard().
 
         //@source: https://stackoverflow.com/questions/14974033/extract-digits-from-string-stringutils-java
-        int value = Integer.parseInt(input.replaceAll("[^0-9]", ""));
+        long value = Long.parseLong(input.replaceAll("[^0-9]", ""));
+
 
         SEED = value;
         RANDOM = new Random(SEED);
@@ -78,7 +79,7 @@ public class Game {
             makeRoom(world, coordinate, occupied, startingPool, rooms);
         }
 
-        
+
         for (Room r: rooms) {
             r.makeBranch(coordinate, world, RANDOM);
             r.makeBranch(coordinate, world, RANDOM);
