@@ -33,7 +33,7 @@ public class Position {
     }
 
     private Position above(Position[][] coordinate) {
-        if (this.y != coordinate[1].length - 1) {
+        if (this.y != coordinate[0].length - 1) {
             return coordinate[this.x][this.y + 1];
         } else {
             return null;
@@ -75,19 +75,27 @@ public class Position {
         switch (direction) {
             case 0:
             case 1:
-                world[this.x - 1][this.y] = Tileset.WALL;
-                coordinate[this.x - 1][this.y].status = 1;
-                world[this.x + 1][this.y] = Tileset.WALL;
-                coordinate[this.x + 1][this.y].status = 1;
+                if (coordinate[this.x - 1][this.y].status == 0){
+                    world[this.x - 1][this.y] = Tileset.WALL;
+                    coordinate[this.x - 1][this.y].status = 1;
+                }
+                if (coordinate[this.x + 1][this.y].status == 0){
+                    world[this.x + 1][this.y] = Tileset.WALL;
+                    coordinate[this.x + 1][this.y].status = 1;
+                }
                 world[this.x][this.y] = Tileset.FLOOR;
                 coordinate[this.x][this.y].status = 1;
                 break;
             case 2:
             case 3:
-                world[this.x][this.y - 1] = Tileset.WALL;
-                coordinate[this.x][this.y - 1].status = 1;
-                world[this.x][this.y + 1] = Tileset.WALL;
-                coordinate[this.x][this.y + 1].status = 1;
+                if (coordinate[this.x][this.y - 1].status == 0){
+                    world[this.x][this.y - 1] = Tileset.WALL;
+                    coordinate[this.x][this.y - 1].status = 1;
+                }
+                if (coordinate[this.x][this.y + 1].status == 0){
+                    world[this.x][this.y + 1] = Tileset.WALL;
+                    coordinate[this.x][this.y + 1].status = 1;
+                }
                 world[this.x][this.y] = Tileset.FLOOR;
                 coordinate[this.x][this.y].status = 1;
                 break;

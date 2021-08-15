@@ -95,6 +95,13 @@ public class Room {
         int length = this.perimeter.get(side).size();
         int p = RandomUtils.uniform(RANDOM, 1, length - 1);
         Position middleP = this.perimeter.get(side).get(p);
+
+        while (middleP.isEdge(coordinate)) {
+            side = RandomUtils.uniform(RANDOM, 0, 4);
+            length = this.perimeter.get(side).size();
+            p = RandomUtils.uniform(RANDOM, 1, length - 1);
+            middleP = this.perimeter.get(side).get(p);
+        }
         middleP.drawCombo(side, coordinate, world);
         while (middleP.nextP(coordinate, side).status != 1) {
             middleP = middleP.nextP(coordinate,side);

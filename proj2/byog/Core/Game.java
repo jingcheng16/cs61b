@@ -1,7 +1,5 @@
 package byog.Core;
 
-//import byog.TileEngine.*;
-
 import byog.TileEngine.TERenderer;
 import byog.TileEngine.TETile;
 import byog.TileEngine.Tileset;
@@ -16,8 +14,8 @@ public class Game {
     public static final int WIDTH = 80;
     public static final int HEIGHT = 30;
 
-    private static final long SEED = 2873123;
-    private static final Random RANDOM = new Random(SEED);
+    private static long SEED = 2873123;
+    private static Random RANDOM = new Random(SEED);
 
     /**
      * Method used for playing a fresh game. The game should start from the main menu.
@@ -41,6 +39,12 @@ public class Game {
         // TODO: Fill out this method to run the game using the input passed in,
         // and return a 2D tile representation of the world that would have been
         // drawn if the same inputs had been given to playWithKeyboard().
+
+        //@source: https://stackoverflow.com/questions/14974033/extract-digits-from-string-stringutils-java
+        int value = Integer.parseInt(input.replaceAll("[^0-9]", ""));
+
+        SEED = value;
+        RANDOM = new Random(SEED);
 
         // initialize the tile rendering engine with a window of size WIDTH x HEIGHT
         ter.initialize(WIDTH, HEIGHT);
@@ -68,12 +72,15 @@ public class Game {
 
         System.out.println("Nothing world generated");
 
-        for (int i = 0; i < 30; i++) {
+        int roomNumber = RandomUtils.uniform(RANDOM, 15, 35);
+
+        for (int i = 0; i < roomNumber; i++) {
             makeRoom(world, coordinate, occupied, startingPool, rooms);
         }
 
-
+        
         for (Room r: rooms) {
+            r.makeBranch(coordinate, world, RANDOM);
             r.makeBranch(coordinate, world, RANDOM);
         }
 
