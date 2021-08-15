@@ -4,9 +4,9 @@ import byog.TileEngine.TERenderer;
 import byog.TileEngine.TETile;
 import byog.TileEngine.Tileset;
 
-import java.util.*;
-
-import static java.lang.Math.abs;
+import java.util.HashSet;
+import java.util.Random;
+import java.util.Set;
 
 public class Game {
     TERenderer ter = new TERenderer();
@@ -43,13 +43,8 @@ public class Game {
         //@source: https://stackoverflow.com/questions/14974033/extract-digits-from-string-stringutils-java
         long value = Long.parseLong(input.replaceAll("[^0-9]", ""));
 
-
-
         SEED = value;
         RANDOM = new Random(SEED);
-
-        // initialize the tile rendering engine with a window of size WIDTH x HEIGHT
-        //ter.initialize(WIDTH, HEIGHT);
 
         // initialize tiles
         TETile[][] world = new TETile[WIDTH][HEIGHT];
@@ -72,7 +67,7 @@ public class Game {
             }
         }
 
-        System.out.println("Nothing world generated");
+        //System.out.println("Nothing world generated");
 
         int roomNumber = RandomUtils.uniform(RANDOM, 15, 35);
 
@@ -85,11 +80,6 @@ public class Game {
             r.makeBranch(coordinate, world, RANDOM);
             r.makeBranch(coordinate, world, RANDOM);
         }
-
-
-
-
-        //ter.renderFrame(world);
 
         //return finalWorldFrame;
         return world;
@@ -104,19 +94,9 @@ public class Game {
         return p;
     }
 
-    private static Position randomPoint(List<Position> space) {
-        // the max starting point should not reach the edge
-        Object[] spaceArray = space.toArray();
-        RandomUtils.shuffle(RANDOM, spaceArray);
-        Position p = (Position) spaceArray[0];
-        return p;
-    }
-
-
-
     private static Room makeRectangle(Position p, TETile[][] world, Position[][] coordinate, boolean isHallWay) {
-        System.out.println("Position p.x: " + p.x);
-        System.out.println("Position p.y: " + p.y);
+        //System.out.println("Position p.x: " + p.x);
+        //System.out.println("Position p.y: " + p.y);
 
         int heightLimit = HEIGHT - p.y;
         int widthLimit = WIDTH - p.x;
@@ -149,7 +129,7 @@ public class Game {
             if (heightLimit != 3) {
                 height = RandomUtils.uniform(RANDOM, 3, heightLimit);
             }
-            System.out.println("Initial height:" + height);
+            //System.out.println("Initial height:" + height);
 
             if (widthLimit > 10) {
                 widthLimit = 10;
@@ -158,12 +138,12 @@ public class Game {
             if (widthLimit != 3) {
                 width = RandomUtils.uniform(RANDOM, 3, widthLimit);
             }
-            System.out.println("Initial width:" + width);
+            //System.out.println("Initial width:" + width);
 
         }
 
-        System.out.println("Final height: " + height);
-        System.out.println("Final width: " + width);
+        //System.out.println("Final height: " + height);
+        //System.out.println("Final width: " + width);
 
         //initialize new room
         Room room = new Room(p, width, height, coordinate);
@@ -179,17 +159,17 @@ public class Game {
     public static Room makeRoom(TETile[][] world, Position[][] coordinate, Set occupied, Set startingPool, Set rooms) {
         //make a new room
         Position randomP = randomPoint(startingPool);
-        System.out.println("Generate the starting point");
+        //System.out.println("Generate the starting point");
         Room r = makeRectangle(randomP, world, coordinate, false);
-        System.out.println("Generate a new room");
+        //System.out.println("Generate a new room");
 
         while (isOverlapped(occupied,r)) {
             //remake the room
-            System.out.println("Overlapped. Regeneration begin.");
+            //System.out.println("Overlapped. Regeneration begin.");
             randomP = randomPoint(startingPool);
-            System.out.println("Generate the starting point");
+            //System.out.println("Generate the starting point");
             r = makeRectangle(randomP, world, coordinate, false);
-            System.out.println("Generate a new room");
+            //System.out.println("Generate a new room");
         }
 
         r.drawRoom(world);
@@ -197,7 +177,7 @@ public class Game {
         occupied.addAll(r.entireRoom);
         startingPool.removeAll(r.entireRoom);
         rooms.add(r);
-        System.out.println("New Room Added");
+        //System.out.println("New Room Added");
 
         return r;
     }

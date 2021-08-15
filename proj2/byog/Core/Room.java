@@ -5,6 +5,7 @@ import byog.TileEngine.TETile;
 
 import java.util.*;
 
+
 public class Room {
     Position startingPoint;
     int width;
@@ -13,7 +14,11 @@ public class Room {
     int upperY;
     int leftX;
     int rightX;
-    //perimeter element, first: lower width, second: upper width, third: left width, fourth: right width
+    //perimeter element
+    // first: lower width
+    // second: upper width
+    // third: left width
+    // fourth: right width
     List<List<Position>> perimeter = new ArrayList<>();
 
     //Set<Position> perimeter = new HashSet<>();
