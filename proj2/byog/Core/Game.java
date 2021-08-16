@@ -16,7 +16,8 @@ public class Game {
     public static final int HEIGHT = 30;
     private static long SEED = 2873123;
     private static Random RANDOM = new Random(SEED);
-    public static TETile[][] world = new TETile[WIDTH][HEIGHT];
+    private static TETile[][] world = new TETile[WIDTH][HEIGHT];
+    private static Position[][] coordinate = new Position[WIDTH][HEIGHT];
 
     /**
      * Method used for playing a fresh game. The game should start from the main menu.
@@ -49,7 +50,6 @@ public class Game {
         RANDOM = new Random(SEED);
 
         //create a 2d array to store all the position
-        Position[][] coordinate = new Position[WIDTH][HEIGHT];
         Set<Room> rooms = new HashSet<>();
         Set<Position> occupied = new HashSet<>();
         ArrayList<Position> startingPool = new ArrayList<>();
@@ -71,7 +71,7 @@ public class Game {
         int roomNumber = RandomUtils.uniform(RANDOM, 15, 35);
 
         for (int i = 0; i < roomNumber; i++) {
-            makeRoom(world, coordinate, occupied, startingPool, rooms, RANDOM);
+            makeRoom(occupied, startingPool, rooms);
         }
 
 
@@ -86,14 +86,14 @@ public class Game {
     }
 
 
-    private static Position randomPoint(Random RANDOM, ArrayList space) {
+    private static Position randomPoint(ArrayList space) {
         // the max starting point should not reach the edge
         int i = RandomUtils.uniform(RANDOM, 0, space.size());
         Position p = (Position) space.get(i);
         return p;
     }
 
-    private static Room makeRectangle(Position p, TETile[][] world, Position[][] coordinate, Random RANDOM) {
+    private static Room makeRectangle(Position p) {
         int heightLimit = HEIGHT - p.y;
         int widthLimit = WIDTH - p.x;
         int width;
@@ -125,15 +125,15 @@ public class Game {
         return (occupied.stream().anyMatch(newRoom.entireRoom::contains));
     }
 
-    public static Room makeRoom(TETile[][] world, Position[][] coordinate, Set occupied, ArrayList startingPool, Set rooms, Random RANDOM) {
+    public static Room makeRoom(Set occupied, ArrayList startingPool, Set rooms) {
         //make a new room
-        Position p = randomPoint(RANDOM, startingPool);
-        Room r = makeRectangle(p, world, coordinate, RANDOM);
+        Position p = randomPoint(startingPool);
+        Room r = makeRectangle(p);
 
         while (isOverlapped(occupied,r)) {
             //remake the room
-            p = randomPoint(RANDOM, startingPool);
-            r = makeRectangle(p, world, coordinate, RANDOM);
+            p = randomPoint(startingPool);
+            r = makeRectangle(p);
         }
 
         r.drawRoom(world);

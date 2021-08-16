@@ -3,8 +3,6 @@ package byog.Core;
 import byog.TileEngine.Tileset;
 import byog.TileEngine.TETile;
 
-import static java.lang.Math.sqrt;
-
 public class Position {
     int x;
     int y;

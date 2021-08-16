@@ -3,7 +3,12 @@ package byog.Core;
 import byog.TileEngine.Tileset;
 import byog.TileEngine.TETile;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Random;
+import java.util.Set;
+
+
 
 
 public class Room {
@@ -19,7 +24,7 @@ public class Room {
     // second: upper width
     // third: left width
     // fourth: right width
-    List<List<Position>> perimeter = new ArrayList<>();
+    ArrayList<ArrayList<Position>> perimeter = new ArrayList<>();
 
     //Set<Position> perimeter = new HashSet<>();
     Set<Position> inner = new HashSet<>();
@@ -75,7 +80,7 @@ public class Room {
     }
 
     private void drawPerimeter(TETile[][] world) {
-        for (List<Position> side: perimeter) {
+        for (ArrayList<Position> side: perimeter) {
             for (Position p: side) {
                 world[p.x][p.y] = Tileset.WALL;
                 p.status = 1;
