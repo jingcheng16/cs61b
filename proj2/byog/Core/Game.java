@@ -49,8 +49,7 @@ public class Game {
         SEED = value;
         RANDOM = new Random(SEED);
 
-        TERenderer ter = new TERenderer();
-        ter.initialize(WIDTH, HEIGHT);
+        //ter.initialize(WIDTH, HEIGHT);
 
         //create a 2d array to store all the position
         Set<Room> rooms = new HashSet<>();
@@ -78,7 +77,7 @@ public class Game {
 
         for (Room r: rooms) {
             int count = 0;
-            int[] list = {0,1,2,3};
+            int[] list = {0, 1, 2, 3};
             RandomUtils.shuffle(RANDOM, list);
             for (int side: list) {
                 if (r.makeBranch(side, coordinate, world, RANDOM)) {
@@ -89,10 +88,10 @@ public class Game {
                 }
             }
         }
-        
+
 
         // draws the world to the screen
-        ter.renderFrame(world);
+        //ter.renderFrame(world);
 
         //return finalWorldFrame;
         return world;
