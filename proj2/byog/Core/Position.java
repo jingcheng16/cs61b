@@ -66,11 +66,11 @@ public class Position {
         switch (direction) {
             case 0:
             case 1:
-                if (coordinate[this.x - 1][this.y].status == 0){
+                if (coordinate[this.x - 1][this.y].status == 0) {
                     world[this.x - 1][this.y] = Tileset.WALL;
                     coordinate[this.x - 1][this.y].status = 1;
                 }
-                if (coordinate[this.x + 1][this.y].status == 0){
+                if (coordinate[this.x + 1][this.y].status == 0) {
                     world[this.x + 1][this.y] = Tileset.WALL;
                     coordinate[this.x + 1][this.y].status = 1;
                 }
@@ -79,11 +79,11 @@ public class Position {
                 break;
             case 2:
             case 3:
-                if (coordinate[this.x][this.y - 1].status == 0){
+                if (coordinate[this.x][this.y - 1].status == 0) {
                     world[this.x][this.y - 1] = Tileset.WALL;
                     coordinate[this.x][this.y - 1].status = 1;
                 }
-                if (coordinate[this.x][this.y + 1].status == 0){
+                if (coordinate[this.x][this.y + 1].status == 0) {
                     world[this.x][this.y + 1] = Tileset.WALL;
                     coordinate[this.x][this.y + 1].status = 1;
                 }

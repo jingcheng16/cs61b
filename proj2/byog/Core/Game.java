@@ -49,6 +49,9 @@ public class Game {
         SEED = value;
         RANDOM = new Random(SEED);
 
+        TERenderer ter = new TERenderer();
+        ter.initialize(WIDTH, HEIGHT);
+
         //create a 2d array to store all the position
         Set<Room> rooms = new HashSet<>();
         Set<Position> occupied = new HashSet<>();
@@ -66,9 +69,7 @@ public class Game {
             }
         }
 
-        //System.out.println("Nothing world generated");
-
-        int roomNumber = RandomUtils.uniform(RANDOM, 15, 35);
+        int roomNumber = RandomUtils.uniform(RANDOM, 30, 45);
 
         for (int i = 0; i < roomNumber; i++) {
             makeRoom(occupied, startingPool, rooms);
@@ -76,10 +77,22 @@ public class Game {
 
 
         for (Room r: rooms) {
-            r.makeBranch(coordinate, world, RANDOM);
-            r.makeBranch(coordinate, world, RANDOM);
+            int count = 0;
+            int[] list = {0,1,2,3};
+            RandomUtils.shuffle(RANDOM, list);
+            for (int side: list) {
+                if (r.makeBranch(side, coordinate, world, RANDOM)) {
+                    count++;
+                }
+                if (count == 2) {
+                    break;
+                }
+            }
         }
+        
 
+        // draws the world to the screen
+        ter.renderFrame(world);
 
         //return finalWorldFrame;
         return world;
@@ -130,7 +143,7 @@ public class Game {
         Position p = randomPoint(startingPool);
         Room r = makeRectangle(p);
 
-        while (isOverlapped(occupied,r)) {
+        while (isOverlapped(occupied, r)) {
             //remake the room
             p = randomPoint(startingPool);
             r = makeRectangle(p);
@@ -142,7 +155,6 @@ public class Game {
         occupied.addAll(r.entireRoom);
         startingPool.removeAll(r.entireRoom);
         rooms.add(r);
-        //System.out.println("New Room Added");
 
         return r;
     }

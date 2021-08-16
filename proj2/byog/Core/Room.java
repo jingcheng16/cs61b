@@ -100,32 +100,31 @@ public class Room {
         drawInner(world);
     }
 
-    public void makeBranch(Position[][] coordinate, TETile[][] world, Random RANDOM) {
-        int side = RandomUtils.uniform(RANDOM, 0, 4);
+    public boolean makeBranch(int side, Position[][] coordinate, TETile[][] world, Random r) {
         int length = this.perimeter.get(side).size();
-        int p = RandomUtils.uniform(RANDOM, 1, length - 1);
+        int p = RandomUtils.uniform(r, 1, length - 1);
         Position middleP = this.perimeter.get(side).get(p);
 
-        while (middleP.isEdge(coordinate)) {
-            side = RandomUtils.uniform(RANDOM, 0, 4);
-            length = this.perimeter.get(side).size();
-            p = RandomUtils.uniform(RANDOM, 1, length - 1);
-            middleP = this.perimeter.get(side).get(p);
+        if (middleP.isEdge(coordinate)) {
+            return false;
         }
         middleP.drawCombo(side, coordinate, world);
+
         while (middleP.nextP(coordinate, side).status != 1) {
-            middleP = middleP.nextP(coordinate,side);
+            middleP = middleP.nextP(coordinate, side);
             middleP.drawCombo(side, coordinate, world);
             if (middleP.isEdge(coordinate)) {
                 break;
             }
         }
+
         if (middleP.isEdge(coordinate)) {
             world[middleP.x][middleP.y] = Tileset.WALL;
         } else {
             Position endP = middleP.nextP(coordinate, side);
             endP.drawCombo(side, coordinate, world);
         }
+        return true;
     }
 
 }
