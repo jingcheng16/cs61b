@@ -4,6 +4,7 @@ import byog.TileEngine.TERenderer;
 import byog.TileEngine.TETile;
 import byog.TileEngine.Tileset;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
@@ -13,9 +14,9 @@ public class Game {
     /* Feel free to change the width and height. */
     public static final int WIDTH = 80;
     public static final int HEIGHT = 30;
-
     private static long SEED = 2873123;
     private static Random RANDOM = new Random(SEED);
+    public static TETile[][] world = new TETile[WIDTH][HEIGHT];
 
     /**
      * Method used for playing a fresh game. The game should start from the main menu.
@@ -36,29 +37,27 @@ public class Game {
      * @return the 2D TETile[][] representing the state of the world
      */
     public TETile[][] playWithInputString(String input) {
-        // TODO: Fill out this method to run the game using the input passed in,
+        // Fill out this method to run the game using the input passed in,
         // and return a 2D tile representation of the world that would have been
         // drawn if the same inputs had been given to playWithKeyboard().
 
-        //@source: https://stackoverflow.com/questions/14974033/extract-digits-from-string-stringutils-java
+        //@source:
+        // https://stackoverflow.com/questions/14974033/extract-digits-from-string-stringutils-java
         long value = Long.parseLong(input.replaceAll("[^0-9]", ""));
 
         SEED = value;
         RANDOM = new Random(SEED);
 
-        // initialize tiles
-        TETile[][] world = new TETile[WIDTH][HEIGHT];
-
         //create a 2d array to store all the position
         Position[][] coordinate = new Position[WIDTH][HEIGHT];
         Set<Room> rooms = new HashSet<>();
         Set<Position> occupied = new HashSet<>();
-        Set<Position> startingPool = new HashSet<>();
+        ArrayList<Position> startingPool = new ArrayList<>();
 
         for (int x = 0; x < WIDTH; x += 1) {
             for (int y = 0; y < HEIGHT; y += 1) {
                 world[x][y] = Tileset.NOTHING;
-                coordinate[x][y] = new Position(x,y);
+                coordinate[x][y] = new Position(x, y);
                 if (x >= (WIDTH - 3) || y >= (HEIGHT - 3)) {
                     continue;
                 } else {
@@ -72,7 +71,7 @@ public class Game {
         int roomNumber = RandomUtils.uniform(RANDOM, 15, 35);
 
         for (int i = 0; i < roomNumber; i++) {
-            makeRoom(world, coordinate, occupied, startingPool, rooms);
+            makeRoom(world, coordinate, occupied, startingPool, rooms, RANDOM);
         }
 
 
@@ -81,69 +80,39 @@ public class Game {
             r.makeBranch(coordinate, world, RANDOM);
         }
 
+
         //return finalWorldFrame;
         return world;
     }
 
 
-    private static Position randomPoint(Set space) {
+    private static Position randomPoint(Random RANDOM, ArrayList space) {
         // the max starting point should not reach the edge
-        Object[] spaceArray = space.toArray();
-        RandomUtils.shuffle(RANDOM, spaceArray);
-        Position p = (Position) spaceArray[0];
+        int i = RandomUtils.uniform(RANDOM, 0, space.size());
+        Position p = (Position) space.get(i);
         return p;
     }
 
-    private static Room makeRectangle(Position p, TETile[][] world, Position[][] coordinate, boolean isHallWay) {
-        //System.out.println("Position p.x: " + p.x);
-        //System.out.println("Position p.y: " + p.y);
-
+    private static Room makeRectangle(Position p, TETile[][] world, Position[][] coordinate, Random RANDOM) {
         int heightLimit = HEIGHT - p.y;
         int widthLimit = WIDTH - p.x;
         int width;
         int height;
 
-
-        if (isHallWay) {
-            //50% probability to generate a horizontal hallway or vertical hallway
-            if (RandomUtils.bernoulli(RANDOM, 0.5)) {
-                width = 3;
-                if (heightLimit == 3) {
-                    height = 3;
-                } else {
-                    height = RandomUtils.uniform(RANDOM, 3, heightLimit);
-                }
-            } else {
-                height = 3;
-                if (widthLimit == 3) {
-                    width = 3;
-                } else {
-                    width = RandomUtils.uniform(RANDOM, 3, widthLimit);
-                }
-            }
-        } else {
-            if (heightLimit > 10) {
-                heightLimit = 10;
-            }
-            height = 3;
-            if (heightLimit != 3) {
-                height = RandomUtils.uniform(RANDOM, 3, heightLimit);
-            }
-            //System.out.println("Initial height:" + height);
-
-            if (widthLimit > 10) {
-                widthLimit = 10;
-            }
-            width = 3;
-            if (widthLimit != 3) {
-                width = RandomUtils.uniform(RANDOM, 3, widthLimit);
-            }
-            //System.out.println("Initial width:" + width);
-
+        if (heightLimit > 10) {
+            heightLimit = 10;
         }
-
-        //System.out.println("Final height: " + height);
-        //System.out.println("Final width: " + width);
+        height = 3;
+        if (heightLimit != 3) {
+            height = RandomUtils.uniform(RANDOM, 3, heightLimit);
+        }
+        if (widthLimit > 10) {
+            widthLimit = 10;
+        }
+        width = 3;
+        if (widthLimit != 3) {
+            width = RandomUtils.uniform(RANDOM, 3, widthLimit);
+        }
 
         //initialize new room
         Room room = new Room(p, width, height, coordinate);
@@ -156,23 +125,19 @@ public class Game {
         return (occupied.stream().anyMatch(newRoom.entireRoom::contains));
     }
 
-    public static Room makeRoom(TETile[][] world, Position[][] coordinate, Set occupied, Set startingPool, Set rooms) {
+    public static Room makeRoom(TETile[][] world, Position[][] coordinate, Set occupied, ArrayList startingPool, Set rooms, Random RANDOM) {
         //make a new room
-        Position randomP = randomPoint(startingPool);
-        //System.out.println("Generate the starting point");
-        Room r = makeRectangle(randomP, world, coordinate, false);
-        //System.out.println("Generate a new room");
+        Position p = randomPoint(RANDOM, startingPool);
+        Room r = makeRectangle(p, world, coordinate, RANDOM);
 
         while (isOverlapped(occupied,r)) {
             //remake the room
-            //System.out.println("Overlapped. Regeneration begin.");
-            randomP = randomPoint(startingPool);
-            //System.out.println("Generate the starting point");
-            r = makeRectangle(randomP, world, coordinate, false);
-            //System.out.println("Generate a new room");
+            p = randomPoint(RANDOM, startingPool);
+            r = makeRectangle(p, world, coordinate, RANDOM);
         }
 
         r.drawRoom(world);
+
 
         occupied.addAll(r.entireRoom);
         startingPool.removeAll(r.entireRoom);

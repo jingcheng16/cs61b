@@ -3,9 +3,6 @@ package byog.Core;
 import byog.TileEngine.Tileset;
 import byog.TileEngine.TETile;
 
-import java.util.ArrayList;
-
-import static java.lang.Math.abs;
 import static java.lang.Math.sqrt;
 
 public class Position {
@@ -18,10 +15,6 @@ public class Position {
         this.x = x;
         this.y = y;
         this.status = 0;
-    }
-
-    public static double distance(Position a, Position b) {
-        return sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y));
     }
 
     private Position below(Position[][] coordinate) {
@@ -99,7 +92,8 @@ public class Position {
                 world[this.x][this.y] = Tileset.FLOOR;
                 coordinate[this.x][this.y].status = 1;
                 break;
-
+            default:
+                break;
         }
     }
 
