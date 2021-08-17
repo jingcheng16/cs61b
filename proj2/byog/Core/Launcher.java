@@ -8,7 +8,7 @@ public class Launcher {
         TETile[][] worldState = game.playWithInputString("n5197880843569031643s");
 
         Game game2 = new Game();
-        TETile[][] worldState2 = game.playWithInputString("n5197880843569031643s");
+        TETile[][] worldState2 = game2.playWithInputString("n5197880843569031643s");
 
         System.out.println(worldState.equals(worldState2));
         String s1 = TETile.toString(worldState);

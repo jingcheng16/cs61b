@@ -10,14 +10,14 @@ import java.util.Random;
 import java.util.Set;
 
 public class Game {
-    public static TERenderer ter = new TERenderer();
+    private TERenderer ter = new TERenderer();
     /* Feel free to change the width and height. */
-    public static final int WIDTH = 80;
-    public static final int HEIGHT = 30;
-    public static long SEED = 2873123;
-    public static Random RANDOM = new Random(SEED);
-    public static TETile[][] world = new TETile[WIDTH][HEIGHT];
-    public static Position[][] coordinate = new Position[WIDTH][HEIGHT];
+    private static final int WIDTH = 80;
+    private static final int HEIGHT = 30;
+    private static long SEED = 2873123;
+    private static Random RANDOM = new Random(SEED);
+    private static TETile[][] world = new TETile[WIDTH][HEIGHT];
+    private static Position[][] coordinate = new Position[WIDTH][HEIGHT];
 
     /**
      * Method used for playing a fresh game. The game should start from the main menu.
@@ -45,7 +45,6 @@ public class Game {
         //@source:
         // https://stackoverflow.com/questions/14974033/extract-digits-from-string-stringutils-java
         long value = Long.parseLong(input.replaceAll("[^0-9]", ""));
-
         SEED = value;
         RANDOM = new Random(SEED);
 
@@ -59,6 +58,8 @@ public class Game {
         Set<Position> occupied = new HashSet<>();
         ArrayList<Position> startingPool = new ArrayList<>();
 
+
+
         for (int x = 0; x < WIDTH; x += 1) {
             for (int y = 0; y < HEIGHT; y += 1) {
                 world[x][y] = Tileset.NOTHING;
@@ -71,10 +72,11 @@ public class Game {
             }
         }
 
+
         int roomNumber = RandomUtils.uniform(RANDOM, 30, 45);
 
         for (int i = 0; i < roomNumber; i++) {
-            makeRoom(occupied, startingPool, rooms);
+            makeRoom(occupied, startingPool, rooms, RANDOM);
         }
 
 
@@ -100,13 +102,14 @@ public class Game {
         return world;
     }
 
-
+    /**
     private static Position randomPoint(ArrayList space) {
         // the max starting point should not reach the edge
         int i = RandomUtils.uniform(RANDOM, 0, space.size());
         Position p = (Position) space.get(i);
         return p;
     }
+     */
 
     private static Room makeRectangle(Position p) {
         int heightLimit = HEIGHT - p.y;
@@ -140,24 +143,24 @@ public class Game {
         return (occupied.stream().anyMatch(newRoom.entireRoom::contains));
     }
 
-    public static Room makeRoom(Set occupied, ArrayList startingPool, Set rooms) {
+    public static Room makeRoom(Set occupied, ArrayList startingPool, Set rooms, Random r) {
         //make a new room
-        Position p = randomPoint(startingPool);
-        Room r = makeRectangle(p);
+        Position p = Position.randomPoint(startingPool, r);
+        Room room = makeRectangle(p);
 
-        while (isOverlapped(occupied, r)) {
+        while (isOverlapped(occupied, room)) {
             //remake the room
-            p = randomPoint(startingPool);
-            r = makeRectangle(p);
+            p = Position.randomPoint(startingPool, r);
+            room = makeRectangle(p);
         }
 
-        r.drawRoom(world);
+        room.drawRoom(world);
 
 
-        occupied.addAll(r.entireRoom);
-        startingPool.removeAll(r.entireRoom);
-        rooms.add(r);
+        occupied.addAll(room.entireRoom);
+        startingPool.removeAll(room.entireRoom);
+        rooms.add(room);
 
-        return r;
+        return room;
     }
 }

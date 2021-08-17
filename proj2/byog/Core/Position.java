@@ -3,6 +3,9 @@ package byog.Core;
 import byog.TileEngine.Tileset;
 import byog.TileEngine.TETile;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 public class Position {
     int x;
     int y;
@@ -100,5 +103,12 @@ public class Position {
         int width = coordinate.length;
         int height = coordinate[0].length;
         return (this.x == 0 || this.x == width - 1 || this.y == 0 || this.y == height - 1);
+    }
+
+    public static Position randomPoint(ArrayList space, Random r) {
+        // the max starting point should not reach the edge
+        int i = RandomUtils.uniform(r, 0, space.size());
+        Position p = (Position) space.get(i);
+        return p;
     }
 }
