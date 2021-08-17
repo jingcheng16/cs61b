@@ -10,7 +10,7 @@ import java.util.Random;
 import java.util.Set;
 
 public class Game {
-    TERenderer ter = new TERenderer();
+    private TERenderer ter = new TERenderer();
     /* Feel free to change the width and height. */
     public static final int WIDTH = 80;
     public static final int HEIGHT = 30;
@@ -48,6 +48,9 @@ public class Game {
 
         SEED = value;
         RANDOM = new Random(SEED);
+
+        //TETile[][] world = new TETile[WIDTH][HEIGHT];
+        //Position[][] coordinate = new Position[WIDTH][HEIGHT];
 
         //ter.initialize(WIDTH, HEIGHT);
 

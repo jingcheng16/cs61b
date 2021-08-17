@@ -108,6 +108,17 @@ public class Room {
         if (middleP.isEdge(coordinate)) {
             return false;
         }
+
+        Position next = middleP.nextP(coordinate, side);
+
+        if (world[next.x][next.y] == Tileset.FLOOR) {
+            return false;
+        }
+
+        if (next.isEdge(coordinate)) {
+            return false;
+        }
+
         middleP.drawCombo(side, coordinate, world);
 
         while (middleP.nextP(coordinate, side).status != 1) {

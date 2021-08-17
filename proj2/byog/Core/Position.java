@@ -9,6 +9,7 @@ public class Position {
     //status is 0 if the position is unoccupied, 1 vice versa.
     int status;
 
+
     public Position(int x, int y) {
         this.x = x;
         this.y = y;
