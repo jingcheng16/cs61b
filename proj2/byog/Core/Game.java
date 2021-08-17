@@ -10,14 +10,14 @@ import java.util.Random;
 import java.util.Set;
 
 public class Game {
-    private TERenderer ter = new TERenderer();
+    public static TERenderer ter = new TERenderer();
     /* Feel free to change the width and height. */
     public static final int WIDTH = 80;
     public static final int HEIGHT = 30;
-    private static long SEED = 2873123;
-    private static Random RANDOM = new Random(SEED);
-    private static TETile[][] world = new TETile[WIDTH][HEIGHT];
-    private static Position[][] coordinate = new Position[WIDTH][HEIGHT];
+    public static long SEED = 2873123;
+    public static Random RANDOM = new Random(SEED);
+    public static TETile[][] world = new TETile[WIDTH][HEIGHT];
+    public static Position[][] coordinate = new Position[WIDTH][HEIGHT];
 
     /**
      * Method used for playing a fresh game. The game should start from the main menu.
