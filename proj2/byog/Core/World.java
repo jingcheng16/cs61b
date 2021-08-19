@@ -3,17 +3,20 @@ package byog.Core;
 import byog.TileEngine.Tileset;
 import byog.TileEngine.TETile;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.Random;
+import java.util.Set;
 
 public class World {
     private static int WIDTH;
     private static int HEIGHT;
-    public Random RANDOM;
+    private Random RANDOM;
     public TETile[][] world;
-    public Position[][] coordinate;
-    public Set<Room> rooms;
-    public Set<Position> occupied;
-    public ArrayList<Position> startingPool;
+    private Position[][] coordinate;
+    private Set<Room> rooms;
+    private Set<Position> occupied;
+    private ArrayList<Position> startingPool;
 
     public World(int wid, int hei, long seed) {
         this.WIDTH = wid;
@@ -40,26 +43,20 @@ public class World {
 
     public void drawWorld() {
         int roomNumber = RandomUtils.uniform(RANDOM, 30, 45);
-        System.out.println(roomNumber);
 
         for (int i = 0; i < roomNumber; i++) {
             makeRoom();
         }
-
-
 
         for (Room r: rooms) {
             int count = 0;
             int[] list = {0, 1, 2, 3};
             RandomUtils.shuffle(RANDOM, list);
             for (int side: list) {
-                //System.out.print("side: " + side + " count: " + count + " ||");
                 boolean tryBranch = r.makeBranch(side, coordinate, world, RANDOM);
-                //System.out.println("try: " + tryBranch);
                 if (tryBranch) {
                     count++;
                 }
-                //System.out.print("side: " + side + " count: " + count + " ||");
                 if (count == 2) {
                     break;
                 }
