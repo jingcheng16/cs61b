@@ -44,7 +44,8 @@ public class Game {
         // https://stackoverflow.com/questions/14974033/extract-digits-from-string-stringutils-java
         long value = Long.parseLong(input.replaceAll("[^0-9]", ""));
         World world = new World(WIDTH, HEIGHT, value);
-        TETile[][] tileWorld = world.worldGenerator();
+        world.drawWorld();
+        TETile[][] tileWorld = world.world;
 
         // draws the world to the screen
         //ter.renderFrame(world);

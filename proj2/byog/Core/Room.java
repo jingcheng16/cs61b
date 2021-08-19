@@ -100,9 +100,9 @@ public class Room {
         drawInner(world);
     }
 
-    public boolean makeBranch(int side, Position[][] coordinate, TETile[][] world, Random r) {
+    public boolean makeBranch(int side, Position[][] coordinate, TETile[][] world, Random RANDOM) {
         int length = this.perimeter.get(side).size();
-        int p = RandomUtils.uniform(r, 1, length - 1);
+        int p = RandomUtils.uniform(RANDOM, 1, length - 1);
         Position middleP = this.perimeter.get(side).get(p);
 
         if (middleP.isEdge(coordinate)) {
