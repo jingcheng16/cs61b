@@ -39,7 +39,7 @@ public class Game {
         long value = Long.parseLong(input.replaceAll("[^0-9]", ""));
         World world = new World(WIDTH, HEIGHT, value);
         world.drawWorld();
-        TETile[][] tileWorld = world.world;
+        TETile[][] tileWorld = world.getWorldFrame();
 
         // draws the world to the screen
         //ter.renderFrame(world);

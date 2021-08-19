@@ -12,7 +12,7 @@ public class World {
     private static int WIDTH;
     private static int HEIGHT;
     private Random RANDOM;
-    public TETile[][] world;
+    private TETile[][] worldFrame;
     private Position[][] coordinate;
     private Set<Room> rooms;
     private Set<Position> occupied;
@@ -22,7 +22,7 @@ public class World {
         this.WIDTH = wid;
         this.HEIGHT = hei;
         this.RANDOM = new Random(seed);
-        this.world = new TETile[WIDTH][HEIGHT];
+        this.worldFrame = new TETile[WIDTH][HEIGHT];
         this.coordinate = new Position[wid][hei];
         this.rooms = new LinkedHashSet<>();
         this.occupied = new LinkedHashSet<>();
@@ -30,7 +30,7 @@ public class World {
 
         for (int x = 0; x < WIDTH; x += 1) {
             for (int y = 0; y < HEIGHT; y += 1) {
-                world[x][y] = Tileset.NOTHING;
+                worldFrame[x][y] = Tileset.NOTHING;
                 coordinate[x][y] = new Position(x, y);
                 if (x >= (WIDTH - 3) || y >= (HEIGHT - 3)) {
                     continue;
@@ -39,6 +39,10 @@ public class World {
                 }
             }
         }
+    }
+
+    public TETile[][] getWorldFrame() {
+        return this.worldFrame;
     }
 
     public void drawWorld() {
@@ -53,7 +57,7 @@ public class World {
             int[] list = {0, 1, 2, 3};
             RandomUtils.shuffle(RANDOM, list);
             for (int side: list) {
-                boolean tryBranch = r.makeBranch(side, coordinate, world, RANDOM);
+                boolean tryBranch = r.makeBranch(side, coordinate, worldFrame, RANDOM);
                 if (tryBranch) {
                     count++;
                 }
@@ -108,7 +112,7 @@ public class World {
             room = makeRectangle(p);
         }
 
-        room.drawRoom(this.world);
+        room.drawRoom(this.worldFrame);
 
 
         this.occupied.addAll(room.entireRoom);
@@ -116,22 +120,5 @@ public class World {
         this.rooms.add(room);
 
         return room;
-    }
-
-    public static void main(String[] args) {
-        long value = Long.parseLong("n5197880843569031643s".replaceAll("[^0-9]", ""));
-        World world1 = new World(80, 30, value);
-        world1.drawWorld();
-        TETile[][] tileWorld1 = world1.world;
-        World world2 = new World(80, 30, value);
-        world2.drawWorld();
-        TETile[][] tileWorld2 = world2.world;
-
-        System.out.println(tileWorld1.equals(tileWorld2));
-        String s1 = TETile.toString(tileWorld1);
-        String s2 = TETile.toString(tileWorld2);
-        //System.out.println(s1);
-        //System.out.println(s2);
-        System.out.println(s1.equals(s2));
     }
 }
